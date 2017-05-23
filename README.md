@@ -3,7 +3,7 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A: While searching for the solution to a problem, in this case Sudoku, it is
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
