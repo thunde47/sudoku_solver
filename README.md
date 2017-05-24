@@ -3,11 +3,22 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: While searching for the solution to a problem, in this case Sudoku, it is
-
+A: While searching for the solution to a problem, in this case Sudoku, efficiency of solving  
+the problem increases if the solution process is made aware of certain constraints that it is  
+not supposed to violate. The constraints get propagated and limit the explosion of number of  
+iterations before a solution is reached. In the case of Sudoku solving, one such strategy is  
+naked twins. Within the same unit (a row, a column or a square) of a Sudoku if there exist two  
+boxes with 2 possible digits each, such that the 2 digits in box-1 are same as the 2 digits in       box-2, we can readily deduce that no other box in the same unit should have these 2 digits as their     possible  solution (the constraint). Making the search algorithm aware of this deduction at every     iteration will propagate the constraint and reduce the computational complexity of the algorithm.     Implementation of naked twins strategy involves first catching hold of the 2 boxes     
+with identical values inside every unit. Once the boxes (twin boxes) are identified, use the     
+value in any(identical) of the boxes and see if any other box (except for the twin boxes themselves)   
+in the same unit has that as a possible value. If yes, remove the identical value from the box.
+  
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: Adding diagonal units as a constraint is a way of restricting any number between 1 and 9 to  
+appear more than once on the two possible diagonals. Implementation is fairly simple. First  
+the two diagonals are stored in dictionary form and added to the grand list of all other  
+units already containing row units, column units and square units.
 
 ### Install
 
