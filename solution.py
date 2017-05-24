@@ -1,6 +1,8 @@
 import logging
 from utils import *
 
+logging.basicConfig(filename='debug_log.txt',level=logging.DEBUG)
+logger=logging.getLogger(__name__)
 assignments = []
 
 def assign_value(values, box, value):
@@ -25,9 +27,7 @@ def naked_twins(values):
 
     Returns:
         the values dictionary with the naked twins eliminated from peers.
-    """
-
-    
+    """    
     for unit in unitlist:
     # Find all instances of naked twins in a unit
         naked_twins=[] #contains boxes with naked twin values
@@ -41,8 +41,11 @@ def naked_twins(values):
                     if set(list(values[boxi])) == set(list(values[boxj])) and (boxi != boxj):
                         naked_twins.append(boxi)
                         twin_value=values[boxi] 
+        
         if len(naked_twins)==0: #continue back to loop if no naked twin found in the unit
             continue
+        logger.debug("naked twins: %s", naked_twins)
+        logger.debug("sudoku after naked twin strategy: %s", values)
         # Eliminate the naked twins, if found, as possibilities in the unit                         
         for box in unit:
             if box not in naked_twins: #avoid removing a twin digit in the naked twin box itself   
@@ -50,6 +53,8 @@ def naked_twins(values):
                     if digit in twin_value:
                         #remove naked twin value from non-naked twin boxes
                         assign_value(values,box,values[box].replace(digit,''))
+        
+        
     return values     
 
 def grid_values(grid):
@@ -186,15 +191,19 @@ def solve(grid):
     Returns:
         The dictionary representation of the final sudoku grid. False if no solution exists.
     """
+    
     values=grid_values(grid)
     return search(values)
 
 if __name__ == '__main__':
 
     diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
-
-    display(solve(diag_sudoku_grid))
-
+    
+    solution=solve(diag_sudoku_grid)
+    if not solution:
+        logger.error("Sudoku could not be solved")
+    display(solution) 
+    """   
     try:
         from visualize import visualize_assignments
         visualize_assignments(assignments)
@@ -203,3 +212,4 @@ if __name__ == '__main__':
         pass
     except:
         print('We could not visualize your board due to a pygame issue. Not a problem! It is not a requirement.')
+        """
